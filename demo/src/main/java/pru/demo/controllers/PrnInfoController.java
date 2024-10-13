@@ -18,7 +18,7 @@ import pru.demo.entities.PrnRandomInfo;
 import pru.demo.repos.PrnInfoRepo;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("fu/prn")
 public class PrnInfoController {
 
     @Autowired
