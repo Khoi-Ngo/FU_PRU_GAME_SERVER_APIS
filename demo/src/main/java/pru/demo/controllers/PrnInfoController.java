@@ -72,7 +72,7 @@ public class PrnInfoController {
     }
 
     @GetMapping("scan")
-    public ResponseEntity<List<PrnInfoDto>> scanRequests(@RequestParam String param) {
+    public ResponseEntity<List<PrnInfoDto>> scanRequests() {
         List<PrnInfoDto> dtos = null;
         try {
             List<PrnRandomInfo> queriedRes = repo.findNotScanned();
