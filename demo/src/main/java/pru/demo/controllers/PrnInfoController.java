@@ -52,16 +52,12 @@ public class PrnInfoController {
     public ResponseEntity<?> createRandomRequest() {
         try {
             Random random = new Random();
-            List<PrnRandomInfo> randomInfos = random.ints(0, DESCRIPTION_LIST.size())
-                    .distinct()
-                    .limit(1)
-                    .mapToObj(i -> new PrnRandomInfo(
-                            DESCRIPTION_LIST.get(i),
-                            NAME_LIST.get(random.nextInt(NAME_LIST.size())),
-                            PHONE_LIST.get(random.nextInt(PHONE_LIST.size()))))
-                    .collect(Collectors.toList());
+            PrnRandomInfo randomInfo = new PrnRandomInfo(
+                    DESCRIPTION_LIST.get(random.nextInt(DESCRIPTION_LIST.size())),
+                    NAME_LIST.get(random.nextInt(NAME_LIST.size())),
+                    PHONE_LIST.get(random.nextInt(PHONE_LIST.size())));
 
-            repo.saveAll(randomInfos);
+            repo.save(randomInfo);
 
         } catch (Exception e) {
             // Exception handling logic, e.g., log the exception
