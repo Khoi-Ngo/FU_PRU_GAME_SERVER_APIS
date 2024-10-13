@@ -20,10 +20,10 @@ import pru.demo.repos.PrnInfoRepo;
 @RestController
 @RequestMapping("/api/v1")
 public class PrnInfoController {
-    
+
     @Autowired
     private PrnInfoRepo repo;
-    
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -49,7 +49,7 @@ public class PrnInfoController {
             "Olivia Vo");
 
     @GetMapping("create")
-    public void createRandomRequest() {
+    public ResponseEntity<?> createRandomRequest() {
         try {
             Random random = new Random();
             List<PrnRandomInfo> randomInfos = random.ints(0, DESCRIPTION_LIST.size())
@@ -58,14 +58,17 @@ public class PrnInfoController {
                     .mapToObj(i -> new PrnRandomInfo(
                             DESCRIPTION_LIST.get(i),
                             NAME_LIST.get(random.nextInt(NAME_LIST.size())),
-                            PHONE_LIST.get(random.nextInt(PHONE_LIST.size()))
-                    ))
+                            PHONE_LIST.get(random.nextInt(PHONE_LIST.size()))))
                     .collect(Collectors.toList());
-            
+
             repo.saveAll(randomInfos);
+
         } catch (Exception e) {
             // Exception handling logic, e.g., log the exception
+
         }
+        return ResponseEntity.ok("Anyway oke!");
+
     }
 
     @GetMapping("scan")
@@ -75,7 +78,7 @@ public class PrnInfoController {
             List<PrnRandomInfo> queriedRes = repo.findNotScanned();
             queriedRes.forEach(item -> item.setScanned(true));
             repo.saveAll(queriedRes);
-            
+
             dtos = queriedRes.stream()
                     .map(item -> modelMapper.map(item, PrnInfoDto.class))
                     .collect(Collectors.toList());
