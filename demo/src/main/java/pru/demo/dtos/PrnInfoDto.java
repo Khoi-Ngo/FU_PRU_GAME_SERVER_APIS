@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class PrnInfoDto {
     private String description;
-    private char customerName;
+    private String customerName;
     private String phoneNumber;
 }
