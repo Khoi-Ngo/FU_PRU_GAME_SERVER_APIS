@@ -54,7 +54,7 @@ public class PrnInfoController {
             Random random = new Random();
             List<PrnRandomInfo> randomInfos = random.ints(0, DESCRIPTION_LIST.size())
                     .distinct()
-                    .limit(10)
+                    .limit(1)
                     .mapToObj(i -> new PrnRandomInfo(
                             DESCRIPTION_LIST.get(i),
                             NAME_LIST.get(random.nextInt(NAME_LIST.size())),
