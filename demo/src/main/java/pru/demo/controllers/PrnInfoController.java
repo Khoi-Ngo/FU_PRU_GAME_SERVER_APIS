@@ -1,5 +1,6 @@
 package pru.demo.controllers;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pru.demo.dtos.PrnInfoDto;
@@ -42,11 +42,19 @@ public class PrnInfoController {
             "05556781234");
 
     private static final List<String> NAME_LIST = Arrays.asList(
-            "Sophia Nguyen",
-            "Liam Tran",
-            "Emma Pham",
-            "Noah Le",
-            "Olivia Vo");
+            "Sophia", "Liam", "Emma", "Noah", "Olivia");
+
+    private static final List<String> LAST_NAME_LIST = Arrays.asList(
+            "Nguyen", "Tran", "Pham", "Le", "Vo");
+
+    private static final List<String> ADDRESS_LIST = Arrays.asList(
+            "123 Main St", "456 Maple Ave", "789 Oak Blvd", "101 Pine Cir", "202 Birch Dr");
+
+    private static final List<Date> DATE_OF_BIRTH_LIST = Arrays.asList(
+            Date.valueOf("1990-01-01"), Date.valueOf("1991-02-02"), Date.valueOf("1992-03-03"), Date.valueOf("1993-04-04"), Date.valueOf("1994-05-05"));
+
+    private static final List<String> EMAIL_LIST = Arrays.asList(
+            "sophia@gmail.com", "liam@gmail.com", "emma@gmail.com", "noah@gmail.com", "olivia@gmail.com");
 
     @GetMapping("create")
     public ResponseEntity<?> createRandomRequest() {
@@ -55,16 +63,18 @@ public class PrnInfoController {
             PrnRandomInfo randomInfo = new PrnRandomInfo(
                     DESCRIPTION_LIST.get(random.nextInt(DESCRIPTION_LIST.size())),
                     NAME_LIST.get(random.nextInt(NAME_LIST.size())),
-                    PHONE_LIST.get(random.nextInt(PHONE_LIST.size())));
+                    LAST_NAME_LIST.get(random.nextInt(LAST_NAME_LIST.size())),
+                    PHONE_LIST.get(random.nextInt(PHONE_LIST.size())),
+                    ADDRESS_LIST.get(random.nextInt(ADDRESS_LIST.size())),
+                    DATE_OF_BIRTH_LIST.get(random.nextInt(DATE_OF_BIRTH_LIST.size())),
+                    EMAIL_LIST.get(random.nextInt(EMAIL_LIST.size()))
+            );
 
             repo.save(randomInfo);
-
         } catch (Exception e) {
-            // Exception handling logic, e.g., log the exception
-
+            // Log the exception
         }
         return ResponseEntity.ok("Anyway oke!");
-
     }
 
     @GetMapping("scan")
@@ -79,7 +89,7 @@ public class PrnInfoController {
                     .map(item -> modelMapper.map(item, PrnInfoDto.class))
                     .collect(Collectors.toList());
         } catch (Exception e) {
-            // Exception handling logic, e.g., log the exception
+            // Log the exception
         }
         return ResponseEntity.ok(dtos);
     }

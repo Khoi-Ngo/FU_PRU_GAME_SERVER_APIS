@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.sql.Date;
 
 @Entity
 @AllArgsConstructor
@@ -17,14 +18,23 @@ public class PrnRandomInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
-    private String customerName;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
+    private String address;
+    private Date dateOfBirth;
+    private String email;
     private boolean isScanned = false;
 
-    public PrnRandomInfo(String description, String customerName, String phoneNumber) {
+    public PrnRandomInfo(String description, String firstName, String lastName, String phoneNumber, String address,
+            Date dateOfBirth, String email) {
         this.description = description;
-        this.customerName = customerName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-    }    
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+    }
 
 }
